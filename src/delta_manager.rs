@@ -50,7 +50,7 @@ impl DeltaManager {
             cur_num_losses: 0,
             prev_loss_red_time: 0,
             cur_mode: cur_mode,
-            delta: 0.5,
+            delta: default_delta,
         }
     }
 

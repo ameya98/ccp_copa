@@ -36,7 +36,7 @@ fn make_args(log: slog::Logger) -> Result<(CopaConfig, String), std::num::ParseI
         .arg(Arg::with_name("default_delta")
              .long("default_delta")
              .help("Delta to use when in default mode.")
-             .default_value("0.5"))
+             .default_value("0.25"))
         .get_matches();
 
     Ok((
