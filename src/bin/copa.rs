@@ -5,7 +5,9 @@ use clap::Arg;
 extern crate slog;
 extern crate slog_async;
 extern crate slog_term;
+use std::fs::OpenOptions;
 use slog::Drain;
+
 
 extern crate ccp_copa;
 use ccp_copa::CopaConfig;
@@ -13,9 +15,22 @@ use ccp_copa::CopaConfig;
 extern crate portus;
 
 fn make_logger() -> slog::Logger {
-    let decorator = slog_term::TermDecorator::new().build();
+    let log_path = "target/copa.log";
+    let file = OpenOptions::new()
+      .create(true)
+      .write(true)
+      .truncate(true)
+      .open(log_path)
+      .unwrap();
+
+    let decorator = slog_term::PlainDecorator::new(file);
     let drain = slog_term::FullFormat::new(decorator).build().fuse();
     let drain = slog_async::Async::new(drain).build().fuse();
+
+    // let decorator = slog_term::TermDecorator::new().build();
+    // let drain = slog_term::FullFormat::new(decorator).build().fuse();
+    // let drain = slog_async::Async::new(drain).build().fuse();
+
     slog::Logger::root(drain, o!())
 }
 
